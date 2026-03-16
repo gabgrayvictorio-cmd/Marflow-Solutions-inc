@@ -1,94 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Professional Portfolio</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #2563eb;
-            --dark: #1e293b;
-            --light: #f8fafc;
-            --grey: #64748b;
-        }
+# Simple workflow for deploying static content to GitHub Pages
+name: Deploy static content to Pages
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: var(--light); color: var(--dark); line-height: 1.6; }
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ["main"]
 
-        /* Navigation */
-        nav { background: white; padding: 1rem 10%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05); z-index: 1000; }
-        .logo { font-weight: 600; font-size: 1.5rem; color: var(--primary); }
-        .nav-links { list-style: none; display: flex; gap: 2rem; }
-        .nav-links a { text-decoration: none; color: var(--dark); font-weight: 400; transition: 0.3s; }
-        .nav-links a:hover { color: var(--primary); }
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 
-        /* Hero Section */
-        .hero { padding: 100px 10%; text-align: center; background: white; }
-        .hero h1 { font-size: 3rem; margin-bottom: 1rem; }
-        .hero p { font-size: 1.2rem; color: var(--grey); max-width: 600px; margin: 0 auto 2rem; }
-        .btn { background: var(--primary); color: white; padding: 0.8rem 2rem; border-radius: 8px; text-decoration: none; display: inline-block; transition: 0.3s; }
-        .btn:hover { opacity: 0.9; transform: translateY(-2px); }
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
-        /* Projects Grid */
-        .section { padding: 80px 10%; }
-        .section-title { text-align: center; margin-bottom: 3rem; font-size: 2rem; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
-        .card { background: white; padding: 1.5rem; border-radius: 12px; border: 1px solid #e2e8f0; transition: 0.3s; }
-        .card:hover { border-color: var(--primary); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-        .card h3 { margin-bottom: 0.5rem; }
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
-        /* Contact */
-        .contact { text-align: center; background: var(--dark); color: white; }
-        .contact a { color: var(--primary); }
-
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2rem; }
-            .nav-links { display: none; } /* Simplified for this demo */
-        }
-    </style>
-</head>
-<body>
-
-    <nav>
-        <div class="logo">MyBrand</div>
-        <ul class="nav-links">
-            <li><a href="#about">About</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
-
-    <header class="hero" id="about">
-        <h1>Hi, I'm [Your Name]</h1>
-        <p>I build digital experiences that are clean, fast, and functional. Welcome to my corner of the web hosted on GitHub Pages.</p>
-        <a href="#projects" class="btn">View My Work</a>
-    </header>
-
-    <section class="section" id="projects">
-        <h2 class="section-title">Featured Projects</h2>
-        <div class="grid">
-            <div class="card">
-                <h3>Project One</h3>
-                <p>A brief description of a cool thing you built. Focus on the tools used like HTML, CSS, and JS.</p>
-            </div>
-            <div class="card">
-                <h3>Project Two</h3>
-                <p>Another impressive project. Mention the problem it solved or the goal it achieved.</p>
-            </div>
-            <div class="card">
-                <h3>Project Three</h3>
-                <p>Details about a third project to show consistency and variety in your skillset.</p>
-            </div>
-        </div>
-    </section>
-
-    <footer class="section contact" id="contact">
-        <h2>Get In Touch</h2>
-        <p>Currently looking for new opportunities. Feel free to reach out!</p>
-        <p style="margin-top: 20px;">Email: <a href="mailto:hello@example.com">hello@example.com</a></p>
-    </footer>
-
-</body>
-</html>
+jobs:
+  # Single deploy job since we're just deploying
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload entire repository
+          path: '.'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
