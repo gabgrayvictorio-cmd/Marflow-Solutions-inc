@@ -1,43 +1,125 @@
-# Simple workflow for deploying static content to GitHub Pages
-name: Deploy static content to Pages
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marflow Solutions Inc | Global Logistics & Transport</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --main-blue: #001d3d; /* Deep professional blue like Logistico */
+            --accent-orange: #ffc300; /* Bright call-to-action yellow/orange */
+            --light-bg: #f8f9fa;
+            --white: #ffffff;
+        }
 
-on:
-  # Runs on pushes targeting the default branch
-  push:
-    branches: ["main"]
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; color: #333; line-height: 1.6; }
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+        /* Navigation */
+        nav { background: var(--main-blue); padding: 1.2rem 10%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
+        .logo { color: var(--white); font-weight: 700; font-size: 1.5rem; text-transform: uppercase; letter-spacing: 1px; }
+        .logo span { color: var(--accent-orange); }
+        .nav-links { list-style: none; display: flex; gap: 2rem; }
+        .nav-links a { text-decoration: none; color: var(--white); font-size: 0.9rem; font-weight: 500; transition: 0.3s; }
+        .nav-links a:hover { color: var(--accent-orange); }
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+        /* Hero Section */
+        .hero { 
+            height: 80vh; 
+            background: linear-gradient(rgba(0, 29, 61, 0.7), rgba(0, 29, 61, 0.7)), 
+                        url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=2000'); 
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--white);
+            padding: 0 10%;
+        }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 1rem; line-height: 1.2; }
+        .hero p { font-size: 1.2rem; margin-bottom: 2rem; max-width: 700px; opacity: 0.9; }
+        .btn-main { background: var(--accent-orange); color: var(--main-blue); padding: 1rem 2.5rem; text-decoration: none; font-weight: 700; border-radius: 5px; transition: 0.3s; text-transform: uppercase; }
+        .btn-main:hover { background: var(--white); transform: translateY(-3px); }
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
+        /* Services Section */
+        .services { padding: 80px 10%; background: var(--light-bg); }
+        .section-header { text-align: center; margin-bottom: 50px; }
+        .section-header h2 { font-size: 2.5rem; color: var(--main-blue); }
+        .section-header .line { width: 80px; height: 4px; background: var(--accent-orange); margin: 10px auto; }
 
-jobs:
-  # Single deploy job since we're just deploying
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          # Upload entire repository
-          path: '.'
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+        .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .service-card { background: var(--white); padding: 40px 30px; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); transition: 0.3s; border-bottom: 5px solid transparent; }
+        .service-card:hover { transform: translateY(-10px); border-bottom: 5px solid var(--accent-orange); }
+        .service-card h3 { margin-bottom: 15px; color: var(--main-blue); }
+        .service-card p { color: #666; font-size: 0.95rem; }
+
+        /* Footer */
+        footer { background: var(--main-blue); color: var(--white); padding: 50px 10% 20px; text-align: center; }
+        .footer-content { margin-bottom: 30px; }
+        .copyright { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; font-size: 0.8rem; opacity: 0.7; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">Marflow<span>Solutions</span></div>
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#">Tracking</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <h1>Fast & Reliable <br>Logistics Solutions</h1>
+        <p>Marflow Solutions Inc provides world-class air, sea, and land transport services tailored to your business needs.</p>
+        <a href="#services" class="btn-main">Explore Services</a>
+    </header>
+
+    <section class="services" id="services">
+        <div class="section-header">
+            <h2>Our Services</h2>
+            <div class="line"></div>
+        </div>
+        <div class="service-grid">
+            <div class="service-card">
+                <h3>Air Freight</h3>
+                <p>Global reach with the fastest transit times. We handle your high-priority cargo with extreme care and efficiency.</p>
+            </div>
+            <div class="service-card">
+                <h3>Ocean Freight</h3>
+                <p>Cost-effective shipping for large volumes. Our sea logistics offer flexible container options for international trade.</p>
+            </div>
+            <div class="service-card">
+                <h3>Land Transport</h3>
+                <p>Reliable trucking and distribution services across the continent, ensuring door-to-door delivery on time.</p>
+            </div>
+            <div class="service-card">
+                <h3>Warehousing</h3>
+                <p>Smart storage solutions with real-time inventory tracking and secure handling for all types of goods.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <h3>Marflow Solutions Inc</h3>
+            <p>Your Trusted Global Logistics Partner</p>
+        </div>
+        <div class="copyright">
+            &copy; 2026 Marflow Solutions Inc. All Rights Reserved.
+        </div>
+    </footer>
+
+</body>
+</html>
